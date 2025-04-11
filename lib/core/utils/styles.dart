@@ -36,10 +36,11 @@ abstract class Styles{
   fontWeight: FontWeight.w500,
   );
 
-  static TextStyle style20 = TextStyle(
-  color: Colors.black.withValues(alpha: 204),
-  fontSize: 20,
-  fontFamily: 'Inter',
-  fontWeight: FontWeight.w400,
+  static const TextStyle style20 = TextStyle(
+    color: Colors.black,
+    fontSize: 20,
+    fontFamily: 'Inter',
+    fontWeight: FontWeight.w400,
+    height: 0,
   );
 }
