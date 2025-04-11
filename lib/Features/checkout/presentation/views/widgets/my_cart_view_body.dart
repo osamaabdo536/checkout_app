@@ -1,8 +1,12 @@
+import 'package:checkout_app/Features/checkout/data/repos/check_out_repo_impl.dart';
+import 'package:checkout_app/Features/checkout/presentation/cubit/payment_cubit.dart';
 import 'package:checkout_app/Features/checkout/presentation/views/widgets/payment_method_bottom_sheet.dart';
 import 'package:checkout_app/Features/checkout/presentation/views/widgets/total_price_item.dart';
 import 'package:checkout_app/core/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/di/Dependency_Injection.dart';
 import 'order_info_item.dart';
 
 class MyCartViewBody extends StatelessWidget {
@@ -10,7 +14,10 @@ class MyCartViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var screenHeight = MediaQuery.of(context).size.height;
+    var screenHeight = MediaQuery
+        .of(context)
+        .size
+        .height;
 
     return Scaffold(
       body: Padding(
@@ -34,8 +41,11 @@ class MyCartViewBody extends StatelessWidget {
             SizedBox(height: screenHeight * 0.02),
             CustomElevatedButton(
               onPressed: () {
-                showModalBottomSheet(context: context, builder: (context){
-                  return const PaymentMethodsBottomSheet();
+                showModalBottomSheet(context: context, builder: (context) {
+                  return BlocProvider(
+                    create: (context) => sl<PaymentCubit>(),
+                    child: PaymentMethodsBottomSheet(),
+                  );
                 });
               },
               text: "Complete Payment",

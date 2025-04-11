@@ -2,6 +2,7 @@ import 'package:checkout_app/Features/checkout/presentation/views/widgets/paymen
 import 'package:flutter/cupertino.dart';
 
 import '../../../../../core/widgets/custom_elevated_button.dart';
+import 'custom_button_bloc_consumer.dart';
 
 class PaymentMethodsBottomSheet extends StatelessWidget {
   const PaymentMethodsBottomSheet({super.key});
@@ -20,7 +21,7 @@ class PaymentMethodsBottomSheet extends StatelessWidget {
           const SizedBox(
             height: 32,
           ),
-          CustomElevatedButton(onPressed: (){}, text: "Continue")
+          CustomButtonBlocConsumer(),
         ],
       ),
     );
