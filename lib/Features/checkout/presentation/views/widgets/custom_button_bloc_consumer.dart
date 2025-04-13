@@ -1,9 +1,10 @@
-import 'package:checkout_app/Features/checkout/domain/entity/payment_entity.dart';
 import 'package:checkout_app/Features/checkout/presentation/cubit/payment_cubit.dart';
 import 'package:checkout_app/Features/checkout/presentation/views/thank_you_view.dart';
-import 'package:checkout_app/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../core/utils/constants.dart';
+import '../../../../../core/utils/get_transactions_data.dart';
+import '../../../../../core/utils/paypal_payment_method.dart';
 import '../../../../../core/widgets/custom_elevated_button.dart';
 
 class CustomButtonBlocConsumer extends StatelessWidget {
@@ -25,7 +26,6 @@ class CustomButtonBlocConsumer extends StatelessWidget {
         if (state is PaymentFailure) {
           Navigator.of(context).pop();
           SnackBar snackBar = SnackBar(content: Text(state.errorMess));
-          print(state.errorMess);
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
       },
@@ -33,11 +33,16 @@ class CustomButtonBlocConsumer extends StatelessWidget {
         return CustomElevatedButton(
           isLoading: state is PaymentLoading ? true : false,
           onPressed: () {
-            BlocProvider.of<PaymentCubit>(context).makePayment(
-              amount: 51 * 100,
-              currency: "USD",
-              customerId: customerId,
-            );
+            if (activeIndexNotifier.value == 0) {
+              BlocProvider.of<PaymentCubit>(context).makePayment(
+                amount: 51 * 100,
+                currency: "USD",
+                customerId: customerId,
+              );
+            }if(activeIndexNotifier.value == 1){
+              var transactionsData = getTransactionsData();
+              executePaypalPayment(context, transactionsData);
+            }
           },
           text: "Continue",
         );
